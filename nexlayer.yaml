@@ -1,0 +1,42 @@
+application:
+  name: zulip
+  pods:
+  - name: app
+    image: zulip/docker-zulip:9.2-0
+    path: /
+    servicePorts:
+    - 80
+    vars:
+      DB_HOST: "postgres.pod"
+      DB_HOST_PORT: "5432"
+      DB_USER: "zulip"
+      SETTING_MEMCACHED_LOCATION: "memcached.pod:11211"
+      SETTING_REDIS_HOST: "redis.pod"
+      ZULIP_AUTH_BACKENDS: "EmailAuthBackend"
+      ZULIP_ADMINISTRATOR: "admin@nexlayer.com"
+      POSTGRES_PASSWORD: "zulip"
+      POSTGRES_SCHEMA: "zulip"
+      SECRETS_email_password: "placeholder"
+      SECRETS_secret_key: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+      DOMAIN: "relaxed-weasel-zulip.cloud.nexlayer.ai"
+      SETTING_EXTERNAL_HOST: "relaxed-weasel-zulip.cloud.nexlayer.ai"
+  - name: postgres
+    image: zulip/zulip-postgresql:14
+    servicePorts:
+    - 5432
+    vars:
+      POSTGRES_DB: zulip
+      POSTGRES_USER: zulip
+      POSTGRES_PASSWORD: zulip
+    volumes:
+    - name: zulip-db
+      mountPath: /var/lib/postgresql/data
+      size: 10Gi
+  - name: redis
+    image: redis:7-alpine
+    servicePorts:
+    - 6379
+  - name: memcached
+    image: memcached:alpine
+    servicePorts:
+    - 11211
