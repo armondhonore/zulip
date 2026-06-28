@@ -2,7 +2,7 @@ application:
   name: zulip
   pods:
   - name: app
-    image: zulip/docker-zulip:9.2-0
+    image: mirror.gcr.io/zulip/docker-zulip:9.2-0
     path: /
     servicePorts:
     - 80
@@ -40,7 +40,7 @@ application:
       SETTING_EXTERNAL_HOST: "relaxed-weasel-zulip.cloud.nexlayer.ai"
       SETTING_ROOT_DOMAIN_LANDING_PAGE: "True"
   - name: zulip-db
-    image: zulip/zulip-postgresql:14
+    image: mirror.gcr.io/zulip/zulip-postgresql:14
     servicePorts:
     - 5432
     vars:
@@ -52,15 +52,15 @@ application:
       mountPath: /var/lib/postgresql/data
       size: 10Gi
   - name: zulip-redis
-    image: redis:7-alpine
+    image: mirror.gcr.io/library/redis:7-alpine
     servicePorts:
     - 6379
   - name: zulip-memcached
-    image: memcached:alpine
+    image: mirror.gcr.io/library/memcached:alpine
     servicePorts:
     - 11211
   - name: zulip-rabbitmq
-    image: rabbitmq:3.13-management
+    image: mirror.gcr.io/library/rabbitmq:3.13-management
     servicePorts:
     - 5672
     vars:
