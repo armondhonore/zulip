@@ -6,6 +6,13 @@ application:
     path: /
     servicePorts:
     - 80
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "2"
+        memory: "3Gi"
     vars:
       DB_HOST: "zulip-db.pod"
       DB_HOST_PORT: "5432"
