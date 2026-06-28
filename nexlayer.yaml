@@ -38,6 +38,7 @@ application:
       SECRETS_secret_key: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
       DOMAIN: "relaxed-weasel-zulip.cloud.nexlayer.ai"
       SETTING_EXTERNAL_HOST: "relaxed-weasel-zulip.cloud.nexlayer.ai"
+      SETTING_ROOT_DOMAIN_LANDING_PAGE: "True"
   - name: zulip-db
     image: zulip/zulip-postgresql:14
     servicePorts:
