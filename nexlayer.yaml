@@ -24,9 +24,8 @@ application:
       LOADBALANCER_IPS: "0.0.0.0/0"
       SECRETS_postgres_password: "zulippass"
       SECRETS_rabbitmq_password: "zulippass"
-      SECRETS_redis_password: "zulippass"
-      SECRETS_memcached_password: "zulippass"
-      MEMCACHED_USERNAME: "zulip@localhost"
+      SECRETS_redis_password: ""
+      SECRETS_memcached_password: ""
       SECRETS_email_password: "placeholder"
       SECRETS_secret_key: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
       DOMAIN: "relaxed-weasel-zulip.cloud.nexlayer.ai"
@@ -47,16 +46,10 @@ application:
     image: redis:7-alpine
     servicePorts:
     - 6379
-    command: redis-server --requirepass zulippass
   - name: zulip-memcached
     image: memcached:alpine
     servicePorts:
     - 11211
-    vars:
-      SASL_CONF_PATH: /home/memcache/memcached.conf
-      MEMCACHED_SASL_PWDB: /home/memcache/memcached-sasl-db
-      MEMCACHED_PASSWORD: zulippass
-    command: sh -euc "echo 'mech_list: plain' > $SASL_CONF_PATH; echo \"zulip@$HOSTNAME:$MEMCACHED_PASSWORD\" > $MEMCACHED_SASL_PWDB; echo \"zulip@localhost:$MEMCACHED_PASSWORD\" >> $MEMCACHED_SASL_PWDB; exec memcached -S"
   - name: zulip-rabbitmq
     image: rabbitmq:3.13-management
     servicePorts:
